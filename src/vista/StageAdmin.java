@@ -6,7 +6,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import modelo.StoryOrder;
 
-import javax.management.Notification;
 import java.awt.*;
 
 public class StageAdmin {
@@ -27,18 +26,22 @@ public class StageAdmin {
 
 
     public void inicializarStage() {
+        inicializarTrayIcon();
+        //Se inicializa primero el PanelView porque el OrderView requiere de este
+        inicializarPanelView();
+        inicializarOrderView();
+        inicializarMenuBar();
+        configurarStage();
+    }
+
+    private void inicializarTrayIcon() {
         try {
             Notificador notificador = new Notificador();
-            //Se inicializa primero el PanelView porque el OrderView requiere de este
-            inicializarPanelView();
-            inicializarOrderView();
-            inicializarMenuBar();
-            configurarStage();
             stage.setOnCloseRequest(event -> {
                 notificador.apagar();
             });
         } catch (AWTException e) {
-            e.printStackTrace();
+            System.err.println("No se puede cargar el icono de la bandeja...");
         }
     }
 
