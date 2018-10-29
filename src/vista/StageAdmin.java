@@ -1,12 +1,11 @@
 package vista;
 
 import controladores.Notificador;
+import controladores.TemporizadorDeStories;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import modelo.StoryOrder;
-
-import java.awt.*;
 
 public class StageAdmin {
 
@@ -26,7 +25,7 @@ public class StageAdmin {
 
 
     public void inicializarStage() {
-        inicializarTrayIcon();
+        inicializarBandejaDeSistema();
         //Se inicializa primero el PanelView porque el OrderView requiere de este
         inicializarPanelView();
         inicializarOrderView();
@@ -34,9 +33,10 @@ public class StageAdmin {
         configurarStage();
     }
 
-    private void inicializarTrayIcon() {
+    private void inicializarBandejaDeSistema() {
         Notificador notificador = Notificador.instanciar();
         stage.setOnCloseRequest(event -> {
+            TemporizadorDeStories.cancelarTodo();
             notificador.apagar();
         });
     }
