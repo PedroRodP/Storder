@@ -35,14 +35,10 @@ public class StageAdmin {
     }
 
     private void inicializarTrayIcon() {
-        try {
-            Notificador notificador = new Notificador();
-            stage.setOnCloseRequest(event -> {
-                notificador.apagar();
-            });
-        } catch (AWTException e) {
-            System.err.println("No se puede cargar el icono de la bandeja...");
-        }
+        Notificador notificador = Notificador.instanciar();
+        stage.setOnCloseRequest(event -> {
+            notificador.apagar();
+        });
     }
 
     private void inicializarOrderView() {
