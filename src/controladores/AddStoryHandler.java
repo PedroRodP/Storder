@@ -49,7 +49,7 @@ public class AddStoryHandler implements EventHandler<ActionEvent> {
         Story story = new Story(titulo, descripcion, puntos);
         storder.insertarStory(story);
         orderView.actualizar();
-        //TemporizadorDeStories.crearAlarma(titulo, descripcion, hora, minutos);
+        //TODO TemporizadorDeStories.crearAlarma(titulo, descripcion, hora, minutos);
     }
 
     private BorderPane configurarBorderPane(Stage ventana) {

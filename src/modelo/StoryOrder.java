@@ -7,12 +7,20 @@ import java.util.LinkedList;
 
 public class StoryOrder {
 
+    private static StoryOrder storder;
     private LinkedList<Story> stories;
     private Iterator<Story> iterator;
 
-    public StoryOrder() {
+    private StoryOrder() {
         stories = new LinkedList<>();
         iterator = stories.iterator();
+    }
+
+    public static StoryOrder instanciar() {
+        if (storder == null) {
+            storder = new StoryOrder();
+        }
+        return storder;
     }
 
     public void insertarStory(Story story) {
