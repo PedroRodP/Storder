@@ -58,6 +58,7 @@ public class Notificador extends Thread {
                     //runLater() para Threads de JavaFX dentro de Threads de AWT
                     Platform.runLater(() -> {
                         new StageAdmin().run();
+                        //TODO no permitir si el stage ya esta abierto
                     });
                 }
             });
