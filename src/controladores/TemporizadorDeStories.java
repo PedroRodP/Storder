@@ -5,6 +5,7 @@ import java.util.*;
 public abstract class TemporizadorDeStories {
 
     private static LinkedList<TimerTask> tasks = new LinkedList<>();
+    private static Timer temporizador = new Timer();
 
     public static void crearAlarma(String titulo, String texto, int hora, int minutos) {
         //Date horaDespertar = new Date(System.currentTimeMillis());
@@ -14,7 +15,6 @@ public abstract class TemporizadorDeStories {
         c.set(Calendar.MINUTE, minutos);
         c.set(Calendar.SECOND, 0);
 
-        Timer temporizador = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
@@ -29,5 +29,7 @@ public abstract class TemporizadorDeStories {
         tasks.forEach(timerTask -> {
             timerTask.cancel();
         });
+        temporizador.cancel();
+        temporizador.purge();
     }
 }
