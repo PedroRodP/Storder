@@ -1,7 +1,6 @@
 package controladores;
 
 import javafx.application.Platform;
-import javafx.stage.Stage;
 import vista.StageAdmin;
 
 import java.awt.*;
@@ -51,23 +50,39 @@ public class Notificador extends Thread {
             //Mostrar mensaje en la bandeja
             trayIcon.displayMessage("Storder", "Ejecutando STORDER", TrayIcon.MessageType.INFO);
 
-            //Doble clic en trayIcon abre el stage
-            trayIcon.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    //runLater() para Threads de JavaFX dentro de Threads de AWT
-                    Platform.runLater(() -> {
-                        new StageAdmin().run();
-                        //TODO no permitir si el stage ya esta abierto
-                    });
-                }
-            });
+            configurarOpciones();
 
         } catch (AWTException e) {
             System.err.println("No se puede cargar el icono de la bandeja. " +
                                 "El programa no puede ejecutarse...");
             System.exit(-1);
         }
+    }
+
+    private void configurarOpciones() {
+        //Doble clic en trayIcon abre el stage
+        trayIcon.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //runLater() para Threads de JavaFX dentro de Threads de AWT
+                Platform.runLater(() -> {
+                    new StageAdmin().run();
+                });
+            }
+        });
+
+        //Menu de opciones
+        MenuItem salir = new MenuItem("Salir");
+        salir.addActionListener(e -> {
+            Platform.exit();
+            this.limpiarBandeja();
+            System.exit(0);
+        });
+
+        PopupMenu menu = new PopupMenu();
+        menu.add(salir);
+
+        trayIcon.setPopupMenu(menu);
     }
 
     public void limpiarBandeja() {

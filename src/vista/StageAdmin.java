@@ -13,6 +13,7 @@ public class StageAdmin extends Thread {
     private OrderView orderView;
     private PanelView panelView;
     private StoryOrder storder;
+    private static boolean inicializado;
 
     public StageAdmin() {
         this.stage = new Stage();
@@ -21,7 +22,7 @@ public class StageAdmin extends Thread {
 
     @Override
     public void run() {
-        inicializarStage();
+        if (!inicializado) inicializarStage();
     }
 
     private void inicializarStage() {
@@ -41,6 +42,7 @@ public class StageAdmin extends Thread {
     private void inicializarBandejaDeSistema() {
         stage.setOnCloseRequest(event -> {
             TemporizadorDeStories.cancelarTodo();
+            inicializado = false;
         });
     }
 
@@ -77,6 +79,7 @@ public class StageAdmin extends Thread {
         //Launch
         stage.setTitle("Storder");
         stage.show();
+        inicializado = true;
     }
 
 }
